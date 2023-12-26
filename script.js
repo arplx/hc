@@ -1,87 +1,122 @@
-const carousel = document.querySelector(".carousel");
-let sliders = []
-
-
-let slideIndex = 0;
-
-const createSlide = ()=>{
-    if(slideIndex>= movies.length){
-        slideIndex = 0;
+// objects
+let movies = [
+    {
+        name: '',
+        des: '',
+        image: 'images/slider 2.PNG'
+    },
+    {
+        name: '',
+        des: '',
+        image: 'images/slider 1.PNG'
+    },
+    {
+        name: '',
+        des: '',
+        image: 'images/slider 3.PNG'
+    },
+    {
+        name: '',
+        des: '',
+        image: 'images/slider 4.PNG'
+    },
+    {
+        name: '',
+        des: '',
+        image: 'images/slider 5.PNG'
     }
-
-    // creating DOM element
-    let slide = document.createElement("div")
-    let imgElelment = document.createElement("img")
-    let content = document.createElement("div")
-    let h1 = document.createElement("h1")
-    let p = document.createElement("p")
-
-    // attaching all elements
-    imgElelment.appendChild(document.createTextNode(''));
-    h1.appendChild(document.createTextNode(movies[slideIndex].name));
-    p.appendChild(document.createTextNode(movies[slideIndex].des));
-    content.appendChild(h1);
-    content.appendChild(p);
-    slide.appendChild(content);
-    slide.appendChild(imgElelment);
-    carousel.appendChild(slide);
+];
 
 
-    // setting up image
-    imgElelment.src = movies[slideIndex].image;
-    slideIndex++;
 
-    // getting elements classname
-    slide.className = "slider";
-    content.className = "slide-content";
-    h1.className = "movie-title";
-    p.className = "movie-des";
 
-    sliders.push(slide);
+//data storage
+let carousel = document.querySelector(".carousel");
+let sliders = [];
 
-    // adding sliding effect
-    if(sliders.length){
-        sliders[0].style.marginLeft = `calc(-${100 * (sliders.length -2)}% - ${30 * (sliders.length-2)}px)`
+let sliderIndex = 0;
+
+const createSlide = () => {
+    if(sliderIndex >= movies.length){
+        sliderIndex = 0;
     }
+    
+//Creating Dom element
 
+const slide = document.createElement('div');
+const imgElement = document.createElement('img');
+const content = document.createElement('div');
+const h1 = document.createElement('h1');
+const p = document.createElement('p');
+
+//attaching all elments
+
+imgElement.appendChild(document.createTextNode(''));
+h1.appendChild(document.createTextNode(movies[sliderIndex].name));
+p.appendChild(document.createTextNode(movies[sliderIndex].des));
+content.appendChild(h1);
+content.appendChild(p);
+slide.appendChild(content);
+slide.appendChild(imgElement);
+carousel.appendChild(slide);
+
+//setting up images which is in slider-data js file------
+
+imgElement.src = movies[sliderIndex].image;
+sliderIndex++;
+
+//setting elements
+slide.className = 'slider';
+content.className = 'slider-content';
+h1.className = 'movie-title';
+p.className = 'movie-des';
+
+sliders.push(slide);
+
+//adding sliding effects
+
+if(sliders.length){
+    sliders[0].style.marginLeft = `calc(-${100 * (sliders.length - 2)}% - ${30 * (sliders.length - 2)}px)`;
 }
 
-for(let i =0; i<3; i++){
-    createSlide();
 };
-
-setInterval(()=>{
+for(let i = 0; i < 6; i++){
     createSlide();
-},3000)
+}
+setInterval(() => {
+    createSlide();
+}, 3000);
 
-//video cards
 
-const videoCards = document.querySelectorAll(".video-card")
+//video carousel
+
+const videoCards = [...document.querySelectorAll('.video-card')];
+
 videoCards.forEach(item => {
-    item.addEventListener("mouseover", ()=>{
+    item.addEventListener('mouseover', () =>{
         let video = item.children[1];
         video.play();
     })
-    item.addEventListener("mouseleave", ()=>{
+    item.addEventListener('mouseleave', () =>{
         let video = item.children[1];
         video.pause();
     })
-});
+})
 
-// cards slider 
+// card slider
 
-let  cardContiners = document.querySelectorAll(".card-container")
-let preBtn = document.querySelectorAll(".pre-btn")
-let nxtBtn = document.querySelectorAll(".nxt-btn")
+const cardContainers = [...document.querySelectorAll('.card-container')];
+const preBtn =  [...document.querySelectorAll('.pre-btn')];
+const nxtBtn =  [...document.querySelectorAll('.next-btn')];
 
-cardContiners.forEach((item, i)=>{
-    let containerDimensions = item.getBoundingClientRect();
-    let containerWidth = containerDimensions.width;
+cardContainers.forEach((item, i) =>{
+    let containerDimension = item.getBoundingClientRect();
+    let containerWidth = containerDimension.width;
 
-    nxtBtn[i].addEventListener('click', ()=>{
+    nxtBtn[i].addEventListener('click', () => {
         item.scrollLeft += containerWidth - 200;
     })
-    preBtn[i].addEventListener('click', ()=>{
+    preBtn[i].addEventListener('click', () => {
         item.scrollLeft -= containerWidth + 200;
     })
 })
